@@ -5,22 +5,40 @@
 //  Created by Alessa De Leon Chavez on 2022-05-18.
 //  Copyright © 2022 Angela Yu. All rights reserved.
 //
-
-import Foundation
+import UIKit
 
 
 struct CalculatorBrain {
     
-var bmi: Float?
+var bmi: BMI?
     
     func getBMIValue() -> String {
-       let bmiValue1Decimal = String(format: "%.1f", bmi)
+       
+        let bmiValue1Decimal = String(format: "%.1f", bmi?.value ?? 0.0)
         return bmiValue1Decimal
     }
+    func getAdvice() -> String {
+        return bmi?.advice ?? "No advice"
+    }
+    func getColor() -> UIColor {
+        return bmi?.color ?? UIColor.white
+    }
+   
 
     mutating func calculateBMI(height: Float, weight: Float) {
-       bmi = weight / pow(height, 2)
+     let  bmiValue = weight / pow(height, 2)
+    
+        if bmiValue < 18.5 {
+            bmi = BMI(value: bmiValue, advice: "Eat more pies", color: UIColor.cyan)
+        } else if bmiValue < 24.9 {
+            bmi = BMI(value: bmiValue, advice: "Fit  as a fiddle!", color: UIColor.green)
+                        } else {
+                            bmi = BMI(value: bmiValue, advice: "Eat less pies", color: UIColor.magenta)
+        }
+       
     }
 }
 
-
+// underweight = <18.5
+//normalWeight = 18.5-24.9
+//overWeight = 25
